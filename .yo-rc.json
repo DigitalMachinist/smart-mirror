@@ -1,0 +1,7 @@
+{
+  "generator-react-webpack": {
+    "appName": "smartMirror",
+    "style": "css",
+    "postcss": false
+  }
+}
