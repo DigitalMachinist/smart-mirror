@@ -1,21 +1,32 @@
 /* Base Application Styles */
 body {
-  color: #fff;
-  background: #222;
+  font: 10px sans-serif;
+  background-color: #000000;
 }
 
-.index img {
-  margin: 40px auto;
-  border-radius: 4px;
-  background: #fff;
-  display: block;
+.weather .tick {
+  fill: #d0f0ff;
 }
 
-.index .notice {
-  margin: 20px auto;
-  padding: 15px 0;
-  text-align: center;
-  border: 1px solid #000;
-  border-width: 1px 0;
-  background: #666;
+.weather .tick text {
+  font-size: 16px;
+}
+
+.weather .area {
+  fill: #d0f0ff;
+  stroke: none;
+  stroke-width: 1;
+}
+.weather .line {
+  fill: none;
+  stroke: #a0ffc0;
+  stroke-width: 2;
+}
+
+.weather .y.axis line {
+  fill: none;
+  opacity: 0.6;
+  stroke: #d0f0ff;
+  stroke-dasharray: 1, 1;
+  stroke-width: 1;
 }
