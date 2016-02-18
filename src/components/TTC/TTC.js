@@ -33,7 +33,7 @@ export default class TTC extends Component {
                   missedThreshold = { missedThreshold }
                   warningThreshold = { warningThreshold }
                 />
-              )
+              );
             } )
         }
       </div>

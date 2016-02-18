@@ -2,7 +2,7 @@
 export default function get3HourForecastData( apiKey, location, forecastPeriod = 120, units = 'metric' ) {
 
   if ( !apiKey ) {
-    throw new Error( 'An API key is required to access the weather API.' )
+    throw new Error( 'An API key is required to access the weather API.' );
   }
 
   if ( !location ) {
@@ -54,7 +54,7 @@ export default function get3HourForecastData( apiKey, location, forecastPeriod =
     .catch( error => {
       console.error( 'Failed to transform the data from the Open Weather Map API!' );
       throw error;
-    } )
+    } );
 
 }
 

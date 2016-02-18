@@ -30,7 +30,7 @@ export default function getTTCDepartureData ( routes ) {
               routeDepartures[ routeIndex ].departuresWestbound = departures;
             }
             return routeDepartures;
-          }, [] )
+          }, [] );
     } )
     .catch( error => {
       throw new Error( error );

@@ -19,10 +19,14 @@ export default class TTCRoute extends Component {
             <div className="title column">E</div>
             {
               departuresEastbound
-                .reduce( ( departures, departure, i ) => ( i >= 4 ) ? departures : departures.concat( departure ), [] )
+                .reduce( ( departures, departure, i ) => {
+                  return ( i >= 4 )
+                    ? departures
+                    : departures.concat( departure );
+                }, [] )
                 .map( ( totalMinutes, index ) => {
-                  const hours = Math.floor( totalMinutes / 60 );
-                  const minutes = ( totalMinutes % 60 ).toFixed( 0 );
+                  // const hours = Math.floor( totalMinutes / 60 );
+                  // const minutes = ( totalMinutes % 60 ).toFixed( 0 );
                   return (
                     <TTCDeparture
                       key = { index }
@@ -30,7 +34,7 @@ export default class TTCRoute extends Component {
                       index = { index + 1 }
                       minutes = { totalMinutes }
                       missedThreshold = { missedThreshold }
-                      text = { `${ hours }:${ ( ( minutes < 10 ) ? '0' : '' ) }${ minutes }` }
+                      text = { `${ totalMinutes }m` }
                       warningThreshold = { warningThreshold }
                     />
                   );
@@ -41,10 +45,14 @@ export default class TTCRoute extends Component {
             <div className="title column">W</div>
             {
                 departuresWestbound
-                  .reduce( ( departures, departure, i ) => ( i >= 3 ) ? departures : departures.concat( departure ), [] )
+                  .reduce( ( departures, departure, i ) => {
+                    return ( i >= 4 )
+                      ? departures
+                      : departures.concat( departure );
+                  }, [] )
                   .map( ( totalMinutes, index ) => {
-                    const hours = Math.floor( totalMinutes / 60 );
-                    const minutes = ( totalMinutes % 60 ).toFixed( 0 );
+                    // const hours = Math.floor( totalMinutes / 60 );
+                    // const minutes = ( totalMinutes % 60 ).toFixed( 0 );
                     return (
                       <TTCDeparture
                         key = { index }
@@ -52,7 +60,7 @@ export default class TTCRoute extends Component {
                         index = { index + 1 }
                         minutes = { totalMinutes }
                         missedThreshold = { missedThreshold }
-                        text = { `${ hours }:${ ( ( minutes < 10 ) ? '0' : '' ) }${ minutes }` }
+                        text = { `${ totalMinutes }m` }
                         warningThreshold = { warningThreshold }
                       />
                     );
