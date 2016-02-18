@@ -1,0 +1,76 @@
+
+.ttc .route {
+/*   background-color: #333; */
+  width: 300px;
+  position: relative;
+  margin: 10px;
+}
+
+.ttc .route .number {
+  font-size: 70px;
+  height: 54px;
+}
+
+.ttc .route .number span {
+  position: absolute;
+  top: -12px;
+}
+
+.ttc .route .direction {
+  position: absolute;
+  left: 80px;
+}
+
+.ttc .route .eastbound {
+  top: -3px;
+}
+
+.ttc .route .westbound {
+  bottom: -6px;
+}
+
+.ttc .route .direction .column {
+/*   display: inline-block; */
+  width: 40px;
+}
+
+.ttc .route .direction .title {
+  font-size: 30px;
+  text-align: center;
+}
+
+.ttc .route .direction .departure {
+  border: 1px solid #eee;
+  border-radius: 3px;
+  font-size: 16px;
+  margin-right: 5px;
+  padding: 1px;
+  position: absolute;
+  text-align: center;
+  top: 5px;
+}
+
+.ttc .route .direction .d1 {
+  left: 42px;
+}
+
+.ttc .route .direction .d2 {
+  left: 97px;
+}
+
+.ttc .route .direction .d3 {
+  left: 152px;
+}
+
+.ttc .route .direction .danger {
+  border: 1px solid #e11;
+}
+
+.ttc .route .direction .missed {
+  border: 1px solid #666;
+  color: #666;
+}
+
+.ttc .route .direction .warning {
+  border: 1px solid #e91;
+}

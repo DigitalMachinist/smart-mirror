@@ -1,0 +1,9 @@
+/*                         */
+/* Base Application Styles */
+/*                         */
+
+body {
+  font: 10px sans-serif;
+  color: #ffffff;
+  background-color: #000000;
+}

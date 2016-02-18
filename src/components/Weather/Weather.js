@@ -1,9 +1,11 @@
+require( './Weather.css' );
+
 import { default as React, Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import get3HourForecastData from '../utilities/weather';
-import { drawChart, eraseChart } from '../utilities/weather-d3';
+import get3HourForecastData from './utils/api';
+import { drawChart, eraseChart } from './utils/d3';
 
-export default class WeatherContanier extends Component {
+export default class Weather extends Component {
 
   constructor ( props ) {
     super( props );
@@ -22,7 +24,6 @@ export default class WeatherContanier extends Component {
     const { pollingInterval } = this.props;
     this.__updateWeatherData();
     if ( pollingInterval > 0 ) {
-      console.log( pollingInterval );
       const pollingHandle = setInterval( this.__updateWeatherData, pollingInterval * 60 * 1000 );
       this.setState( { pollingHandle } );
     }
@@ -48,7 +49,7 @@ export default class WeatherContanier extends Component {
 
 }
 
-WeatherContanier.defaultProps = {
+Weather.defaultProps = {
   apiKey: '',
   forecastPeriod: 24,
   height: 200,
@@ -64,7 +65,7 @@ WeatherContanier.defaultProps = {
   width: 800
 };
 
-WeatherContanier.propTypes = {
+Weather.propTypes = {
   apiKey: PropTypes.string.isRequired, // Valid OpenWeatherMap API key
   forecastPeriod: PropTypes.number, // Hours
   height: PropTypes.number, // Pixels

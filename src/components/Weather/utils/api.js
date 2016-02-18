@@ -1,34 +1,4 @@
 
-function getDate ( sample ) {
-  return new Date( sample.dt * 1000 );
-}
-
-function getPrecipitation ( sample, key ) {
-  if ( !sample[ key ] ) {
-    return 0;
-  }
-  if ( !sample[ key ][ '3h' ] ) {
-    return 0;
-  }
-  return sample[ key ][ '3h' ];
-}
-
-function getWeatherCondition ( sample ) {
-  return sample.weather[ 0 ].main;
-}
-
-function getWeatherIcon ( sample ) {
-  return sample.weather[ 0 ].icon;
-}
-
-function isExtremeWeather ( sample ) {
-  var extremes =
-    sample
-      .weather
-        .filter( weather => weather.main.toLowerCase().includes( 'extreme' ) );
-  return ( extremes.length > 0 );
-}
-
 export default function get3HourForecastData( apiKey, location, forecastPeriod = 120, units = 'metric' ) {
 
   if ( !apiKey ) {
@@ -86,4 +56,34 @@ export default function get3HourForecastData( apiKey, location, forecastPeriod =
       throw error;
     } )
 
+}
+
+function getDate ( sample ) {
+  return new Date( sample.dt * 1000 );
+}
+
+function getPrecipitation ( sample, key ) {
+  if ( !sample[ key ] ) {
+    return 0;
+  }
+  if ( !sample[ key ][ '3h' ] ) {
+    return 0;
+  }
+  return sample[ key ][ '3h' ];
+}
+
+function getWeatherCondition ( sample ) {
+  return sample.weather[ 0 ].main;
+}
+
+function getWeatherIcon ( sample ) {
+  return sample.weather[ 0 ].icon;
+}
+
+function isExtremeWeather ( sample ) {
+  var extremes =
+    sample
+      .weather
+        .filter( weather => weather.main.toLowerCase().includes( 'extreme' ) );
+  return ( extremes.length > 0 );
 }
