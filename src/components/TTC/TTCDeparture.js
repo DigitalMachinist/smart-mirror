@@ -7,7 +7,7 @@ export default class TTCDeparture extends Component {
   }
 
   render () {
-    const { dangerThreshold, index, minutes, postfix, missedThreshold, warningThreshold } = this.props;
+    const { dangerThreshold, index, minutes, missedThreshold, text, warningThreshold } = this.props;
     let warningClass = '';
     if ( minutes <= missedThreshold ) {
       warningClass = ' missed';
@@ -21,7 +21,7 @@ export default class TTCDeparture extends Component {
     const className = `departure d${ index } column${ warningClass }`;
     return (
       <div className={ className }>
-        { minutes }{ postfix }
+        { text }
       </div>
     );
   }
@@ -33,15 +33,15 @@ TTCDeparture.defaultProps = {
   index: 0,
   minutes: 0,
   missedThreshold: 2,
-  postfix: 'm',
+  text: '',
   warningThreshold: 10
 };
 
 TTCDeparture.propTypes = {
   dangerThreshold: PropTypes.number, // Minutes
   index: PropTypes.number.isRequired, // Index in departures array
-  minutes: PropTypes.number.isRequired, // Time to departure
+  minutes: PropTypes.number.isRequired, // Minutes
   missedThreshold: PropTypes.number, // Minutes
-  postfix: PropTypes.string, // Text to place after the # of minutes
+  text: PropTypes.string.isRequired, // String to display
   warningThreshold: PropTypes.number // Minutes
 };

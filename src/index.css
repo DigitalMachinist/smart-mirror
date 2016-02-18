@@ -3,7 +3,10 @@
 /*                         */
 
 body {
-  font: 10px sans-serif;
-  color: #ffffff;
   background-color: #000000;
+  color: #ffffff;
+  fill: #ffffff;
+  font: 12px sans-serif;
+  stroke: none;
+  stoke-width: 1px;
 }

@@ -1,7 +1,13 @@
 
+.ttc .routeContainer {
+  width: 355px;
+  border: 1px solid rgba( 255, 255, 255, 0.25 );
+  border-radius: 3px;
+  margin: 20px 20px 20px 45px;
+}
+
 .ttc .route {
-/*   background-color: #333; */
-  width: 300px;
+  width: 335px;
   position: relative;
   margin: 10px;
 }
@@ -42,12 +48,13 @@
 .ttc .route .direction .departure {
   border: 1px solid #eee;
   border-radius: 3px;
-  font-size: 16px;
+  font-size: 14px;
   margin-right: 5px;
-  padding: 1px;
+  padding: 2px;
   position: absolute;
   text-align: center;
   top: 5px;
+  height: 17px;
 }
 
 .ttc .route .direction .d1 {
@@ -60,6 +67,10 @@
 
 .ttc .route .direction .d3 {
   left: 152px;
+}
+
+.ttc .route .direction .d4 {
+  left: 207px;
 }
 
 .ttc .route .direction .danger {

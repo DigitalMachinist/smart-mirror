@@ -10,49 +10,55 @@ export default class TTCRoute extends Component {
   render () {
     const { dangerThreshold, departuresEastbound, departuresWestbound, id, missedThreshold, warningThreshold } = this.props;
     return (
-      <div className="route">
-        <div className="number">
-          <span>{ id }</span>
-        </div>
-        <div className="direction eastbound">
-          <div className="title column">E</div>
-          {
-            departuresEastbound
-              .reduce( ( three, departure, i ) => ( i >= 3 ) ? three : three.concat( departure ), [] )
-              .map( ( departure, index ) => {
-                return (
-                  <TTCDeparture
-                    key = { index }
-                    dangerThreshold = { dangerThreshold }
-                    index = { index + 1 }
-                    minutes = { departure }
-                    missedThreshold = { missedThreshold }
-                    postfix = { 'm' }
-                    warningThreshold = { warningThreshold }
-                  />
-                )
-              } )
-          }
-        </div>
-        <div className="direction westbound">
-          <div className="title column">W</div>
-          {
-              departuresWestbound
-                .reduce( ( three, departure, i ) => ( i >= 3 ) ? three : three.concat( departure ), [] )
-                .map( ( departure, index ) => {
+      <div className="routeContainer">
+        <div className="route">
+          <div className="number">
+            <span>{ id }</span>
+          </div>
+          <div className="direction eastbound">
+            <div className="title column">E</div>
+            {
+              departuresEastbound
+                .reduce( ( departures, departure, i ) => ( i >= 4 ) ? departures : departures.concat( departure ), [] )
+                .map( ( totalMinutes, index ) => {
+                  const hours = Math.floor( totalMinutes / 60 );
+                  const minutes = ( totalMinutes % 60 ).toFixed( 0 );
                   return (
                     <TTCDeparture
                       key = { index }
                       dangerThreshold = { dangerThreshold }
                       index = { index + 1 }
-                      minutes = { departure }
+                      minutes = { totalMinutes }
                       missedThreshold = { missedThreshold }
-                      postfix = { 'm' }
+                      text = { `${ hours }:${ ( ( minutes < 10 ) ? '0' : '' ) }${ minutes }` }
                       warningThreshold = { warningThreshold }
                     />
-                  )
+                  );
                 } )
-          }
+            }
+          </div>
+          <div className="direction westbound">
+            <div className="title column">W</div>
+            {
+                departuresWestbound
+                  .reduce( ( departures, departure, i ) => ( i >= 3 ) ? departures : departures.concat( departure ), [] )
+                  .map( ( totalMinutes, index ) => {
+                    const hours = Math.floor( totalMinutes / 60 );
+                    const minutes = ( totalMinutes % 60 ).toFixed( 0 );
+                    return (
+                      <TTCDeparture
+                        key = { index }
+                        dangerThreshold = { dangerThreshold }
+                        index = { index + 1 }
+                        minutes = { totalMinutes }
+                        missedThreshold = { missedThreshold }
+                        text = { `${ hours }:${ ( ( minutes < 10 ) ? '0' : '' ) }${ minutes }` }
+                        warningThreshold = { warningThreshold }
+                      />
+                    );
+                  } )
+            }
+          </div>
         </div>
       </div>
     );

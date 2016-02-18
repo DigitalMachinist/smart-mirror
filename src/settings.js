@@ -1,11 +1,18 @@
 const settings = {
   'weather': {
-    'width': 800,
-    'height': 200,
+    'width': 405,
+    'height': 150,
+    'margins': {
+      'top': 10,
+      'right': 15,
+      'bottom': 15,
+      'left': 35
+    },
+    'forecastPeriod': 27,
+    'pollingInterval': 15,
+    'precipitationMax': 5,
     'apiKey': '5c084e3b39a49a5974701c58069592c6',
     'location': 'Toronto,CA',
-    'forecastPeriod': 27,
-    'pollingInterval': 1,
     'units': 'metric'
   },
   'ttc': {
@@ -33,6 +40,6 @@ const settings = {
       'missedThreshold': 2
     } ]
   }
-}
+};
 
 export default Object.freeze( settings );

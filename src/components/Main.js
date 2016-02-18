@@ -19,10 +19,12 @@ export default class AppComponent extends Component {
         <Weather
           width = { weather.width }
           height = { weather.height }
+          margins = { weather.margins }
           apiKey = { weather.apiKey }
           location = { weather.location }
           forecastPeriod = { weather.forecastPeriod }
           pollingInterval = { weather.pollingInterval }
+          precipitationMax = { weather.precipitationMax }
           units = { weather.units }
         />
         <TTC

@@ -42,9 +42,9 @@ export default class Weather extends Component {
   }
 
   __updateChart ( data ) {
-    const { height, margins, width } = this.props;
+    const { height, margins, precipitationMax, width } = this.props;
     eraseChart( ReactDOM.findDOMNode( this ) );
-    drawChart( ReactDOM.findDOMNode( this ), data, height, width, margins );
+    drawChart( ReactDOM.findDOMNode( this ), data, height, width, margins, precipitationMax );
   }
 
 }
@@ -54,13 +54,8 @@ Weather.defaultProps = {
   forecastPeriod: 24,
   height: 200,
   location: 'Toronto,CA',
-  margins: {
-    top: 10,
-    right: 80,
-    bottom: 30,
-    left: 50
-  },
   pollingInterval: 60,
+  precipitationMax: 10,
   units: 'metric',
   width: 800
 };
@@ -72,6 +67,7 @@ Weather.propTypes = {
   location: PropTypes.string, // <City>,<Country Code> e.g. "Toronto,CA"
   margins: PropTypes.object, // { top, right, bottom, left }
   pollingInterval: PropTypes.number, // Minutes
+  precipitationMax: PropTypes.number, // mm
   units: PropTypes.oneOf( [ 'metric', 'imperial' ] ),
   width: PropTypes.number // Pixels
 };

@@ -1,6 +1,6 @@
 import d3 from 'd3';
 
-export function drawChart ( element, data, height, width, margins ) {
+export function drawChart ( element, data, height, width, margins, precipitationMax = 10 ) {
 
   // Set the dimensions of the graph.
   var innerWidth = width - margins.left - margins.right;
@@ -21,7 +21,7 @@ export function drawChart ( element, data, height, width, margins ) {
     d3
       .scale
       .linear()
-      .domain( [ 0, 10 ] )
+      .domain( [ 0, precipitationMax ] )
       .range( [ innerHeight, 0 ] );
 
   var yScaleTemperature =
@@ -29,9 +29,10 @@ export function drawChart ( element, data, height, width, margins ) {
       .scale
       .linear()
       .domain( [
-        d3.min( data, d => d.temperature ) - 2,
-        d3.max( data, d => d.temperature ) + 2
+        d3.min( data, d => d.temperature ) - 3,
+        d3.max( data, d => d.temperature ) + 3
       ] )
+      .nice()
       .range( [ innerHeight, 0 ] );
 
   // Define the axes.
@@ -45,7 +46,7 @@ export function drawChart ( element, data, height, width, margins ) {
       .tickFormat( d3.time.format( '%-I%p' ) )
       .innerTickSize( -innerHeight )
       .outerTickSize( 0 )
-      .tickPadding( 15 );
+      .tickPadding( 5 );
 
   var yAxisPrecipitation =
     d3
@@ -54,10 +55,10 @@ export function drawChart ( element, data, height, width, margins ) {
       .scale( yScalePrecipitation )
       .orient( 'right' )
       .ticks( 3 )
-      .tickFormat( d => d + 'mm' )
+      .tickFormat( d => `${ d }mm` )
       .innerTickSize( 0 )
       .outerTickSize( 0 )
-      .tickPadding( 15 );
+      .tickPadding( 5 );
 
   var yAxisTemperature =
     d3
@@ -65,26 +66,36 @@ export function drawChart ( element, data, height, width, margins ) {
       .axis()
       .scale( yScaleTemperature )
       .orient( 'left' )
-      .ticks( 4 )
-      .tickFormat( d => d + '°' )
+      .ticks( 5 )
+      .tickFormat( d => `${ d }°` )
       .innerTickSize( -innerWidth )
       .outerTickSize( 0 )
-      .tickPadding( 15 );
+      .tickPadding( 5 );
 
   // Define the datasets to be visualized.
-  var precipitationSeries =
+  var precipitationArea =
     d3
     .svg
     .area()
+    .interpolate( 'monotone' )
     .x( d => xScale( d.date ) )
     .y0( innerHeight )
     .y1( d => yScalePrecipitation( d.precipitation ) );
 
-  var temperatureSeries =
+  var temperatureArea =
+    d3
+      .svg
+      .area()
+      .interpolate( 'monotone' )
+      .x( d => xScale( d.date ) )
+      .y0( innerHeight )
+      .y1( d => yScaleTemperature( d.temperature ) );
+
+  var temperatureLine =
     d3
       .svg
       .line()
-      .interpolate( 'linear' )
+      .interpolate( 'monotone' )
       .x( d => xScale( d.date ) )
       .y( d => yScaleTemperature( d.temperature ) );
 
@@ -95,38 +106,63 @@ export function drawChart ( element, data, height, width, margins ) {
       .attr( 'width', width )
       .attr( 'height', height )
       .append( 'g' )
-      .attr( 'transform', 'translate(' + margins.left + ',' + margins.top + ')' );
+      .attr( 'transform', `translate(${ margins.left },${ margins.top })` );
 
   // Add the axes.
   svg
     .append( 'g' )
-    .attr( 'class', 'x axis' )
-    .attr( 'transform', 'translate(0,' + innerHeight + ')' )
+    .attr( 'class', 'x axis time' )
+    .attr( 'transform', `translate(0,${ innerHeight })` )
     .call( xAxis );
 
-  svg
-    .append( 'g' )
-    .attr( 'class', 'y axis' )
-    .attr( 'transform', 'translate(' + innerWidth + ',0)' )
-    .call( yAxisPrecipitation );
+  // svg
+  //   .append( 'g' )
+  //   .attr( 'class', 'y axis precipitation' )
+  //   .attr( 'transform', `translate(${ innerWidth },0)` )
+  //   .call( yAxisPrecipitation );
 
   svg
     .append( 'g' )
-    .attr( 'class', 'y axis' )
+    .attr( 'class', 'y axis temperature' )
+    .attr( 'transform', `translate(0,0)` )
     .call( yAxisTemperature );
 
   // Draw the datasets being visualized.
   svg
+    .selectAll( '.area.temperature' )
+    .data( [ data ] )
+    .enter()
     .append( 'path' )
-    .datum( data )
-    .attr( 'class', 'area' )
-    .attr( 'd', precipitationSeries );
+    .attr( 'class', 'area temperature' )
+    .attr( 'd', temperatureArea );
 
   svg
+    .selectAll( '.area.precipitation' )
+    .data( [ data ] )
+    .enter()
     .append( 'path' )
-    .datum( data )
-    .attr( 'class', 'line' )
-    .attr( 'd', temperatureSeries );
+    .attr( 'class', 'area precipitation' )
+    .attr( 'd', precipitationArea );
+
+  svg
+    .selectAll( '.line.temperature' )
+    .data( [ data ] )
+    .enter()
+    .append( 'path' )
+    .attr( 'class', 'line temperature' )
+    .attr( 'd', temperatureLine );
+
+  // Draw tempaerature labels.
+  svg
+    .selectAll( '.label' )
+    .data( data.slice( 1 ) )
+    .enter()
+    .append( 'text' )
+    .text( d => `${ d.temperature.toFixed( 0 ) }°` )
+    .attr( 'class', 'label' )
+    .attr( 'transform', d => {
+      return `translate(${ xScale( d.date ) - 7 },${ yScaleTemperature( d.temperature ) - 7 })`;
+    } );
 
   return svg;
 }

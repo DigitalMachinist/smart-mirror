@@ -1,27 +1,28 @@
 
-.weather .tick {
-  fill: #d0f0ff;
+.weather {
+  margin: 10px;
 }
 
-.weather .tick text {
-  font-size: 16px;
+.weather .area.precipitation {
+  fill: rgba( 255, 255, 255, 0.5 );
 }
 
-.weather .area {
-  fill: #d0f0ff;
-  stroke: none;
-  stroke-width: 1;
+.weather .area.temperature {
+  fill: rgba( 255, 255, 255, 0.25 );
 }
-.weather .line {
+
+.weather .line.temperature {
   fill: none;
-  stroke: #a0ffc0;
-  stroke-width: 2;
+  stroke: rgba( 255, 255, 255, 1.0 );
+  stroke-width: 1.5;
 }
 
-.weather .y.axis line {
+.weather .axis.temperature line {
   fill: none;
-  opacity: 0.6;
-  stroke: #d0f0ff;
-  stroke-dasharray: 1, 1;
-  stroke-width: 1;
+  stroke: rgba( 255, 255, 255, 0.5 );
+  stroke-width: 0.5;
+}
+
+.weather .label {
+  stroke-width: 0.5;
 }
