@@ -2,6 +2,8 @@
 /* Base Application Styles */
 /*                         */
 
+@import url(https://fonts.googleapis.com/css?family=Josefin+Sans:300,600|Dosis:300,600|Raleway:300,600);
+
 body {
   background-color: #000000;
   color: #ffffff;
