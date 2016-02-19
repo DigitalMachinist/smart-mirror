@@ -10,3 +10,15 @@ body {
   stroke: none;
   stoke-width: 1px;
 }
+
+.clearfix {
+  clear: both;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}

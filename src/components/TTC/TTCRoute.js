@@ -5,10 +5,11 @@ export default class TTCRoute extends Component {
 
   constructor ( props ) {
     super( props );
+    this.__renderTTCDepartures = this.__renderTTCDepartures.bind( this );
   }
 
   render () {
-    const { dangerThreshold, departuresEastbound, departuresWestbound, id, missedThreshold, warningThreshold } = this.props;
+    const { departuresEastbound, departuresWestbound, id } = this.props;
     return (
       <div className="routeContainer">
         <div className="route">
@@ -17,58 +18,41 @@ export default class TTCRoute extends Component {
           </div>
           <div className="direction eastbound">
             <div className="title column">E</div>
-            {
-              departuresEastbound
-                .reduce( ( departures, departure, i ) => {
-                  return ( i >= 4 )
-                    ? departures
-                    : departures.concat( departure );
-                }, [] )
-                .map( ( totalMinutes, index ) => {
-                  // const hours = Math.floor( totalMinutes / 60 );
-                  // const minutes = ( totalMinutes % 60 ).toFixed( 0 );
-                  return (
-                    <TTCDeparture
-                      key = { index }
-                      dangerThreshold = { dangerThreshold }
-                      index = { index + 1 }
-                      minutes = { totalMinutes }
-                      missedThreshold = { missedThreshold }
-                      text = { `${ totalMinutes }m` }
-                      warningThreshold = { warningThreshold }
-                    />
-                  );
-                } )
-            }
+            { this.__renderTTCDepartures( departuresEastbound, 4 ) }
           </div>
           <div className="direction westbound">
             <div className="title column">W</div>
-            {
-                departuresWestbound
-                  .reduce( ( departures, departure, i ) => {
-                    return ( i >= 4 )
-                      ? departures
-                      : departures.concat( departure );
-                  }, [] )
-                  .map( ( totalMinutes, index ) => {
-                    // const hours = Math.floor( totalMinutes / 60 );
-                    // const minutes = ( totalMinutes % 60 ).toFixed( 0 );
-                    return (
-                      <TTCDeparture
-                        key = { index }
-                        dangerThreshold = { dangerThreshold }
-                        index = { index + 1 }
-                        minutes = { totalMinutes }
-                        missedThreshold = { missedThreshold }
-                        text = { `${ totalMinutes }m` }
-                        warningThreshold = { warningThreshold }
-                      />
-                    );
-                  } )
-            }
+            { this.__renderTTCDepartures( departuresWestbound, 4 ) }
           </div>
         </div>
       </div>
+    );
+  }
+
+  __renderTTCDepartures ( departures, max = 4 ) {
+    const { dangerThreshold, id, missedThreshold, warningThreshold } = this.props;
+    return (
+      departures
+        .reduce( ( take, departure, i ) => {
+          return ( i >= max )
+            ? take
+            : take.concat( departure );
+        }, [] )
+        .map( ( totalMinutes, index ) => {
+          // const hours = Math.floor( totalMinutes / 60 );
+          // const minutes = ( totalMinutes % 60 ).toFixed( 0 );
+          return (
+            <TTCDeparture
+              key = { index }
+              dangerThreshold = { dangerThreshold }
+              index = { index + 1 }
+              minutes = { totalMinutes }
+              missedThreshold = { missedThreshold }
+              text = { `${ totalMinutes }m` }
+              warningThreshold = { warningThreshold }
+            />
+          );
+        } )
     );
   }
 

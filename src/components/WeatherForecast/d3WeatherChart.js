@@ -121,11 +121,11 @@ export function drawChart ( element, data, height, width, margins, precipitation
   //   .attr( 'transform', `translate(${ innerWidth },0)` )
   //   .call( yAxisPrecipitation );
 
-  svg
-    .append( 'g' )
-    .attr( 'class', 'y axis temperature' )
-    .attr( 'transform', `translate(0,0)` )
-    .call( yAxisTemperature );
+  // svg
+  //   .append( 'g' )
+  //   .attr( 'class', 'y axis temperature' )
+  //   .attr( 'transform', `translate(0,0)` )
+  //   .call( yAxisTemperature );
 
   // Draw the datasets being visualized.
   svg

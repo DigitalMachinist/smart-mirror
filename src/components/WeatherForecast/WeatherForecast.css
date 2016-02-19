@@ -1,28 +1,28 @@
 
-.weather {
+.weatherForecast {
   margin: 10px;
 }
 
-.weather .area.precipitation {
+.weatherForecast .area.precipitation {
   fill: rgba( 255, 255, 255, 0.5 );
 }
 
-.weather .area.temperature {
+.weatherForecast .area.temperature {
   fill: rgba( 255, 255, 255, 0.25 );
 }
 
-.weather .line.temperature {
+.weatherForecast .line.temperature {
   fill: none;
   stroke: rgba( 255, 255, 255, 1.0 );
   stroke-width: 1.5;
 }
 
-.weather .axis.temperature line {
+.weatherForecast .x.axis line {
   fill: none;
   stroke: rgba( 255, 255, 255, 0.5 );
   stroke-width: 0.5;
 }
 
-.weather .label {
+.weatherForecast .label {
   stroke-width: 0.5;
 }

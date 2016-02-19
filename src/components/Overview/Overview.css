@@ -1,0 +1,58 @@
+
+.overviewContainer {
+  width: 355px;
+  border: 1px solid rgba( 255, 255, 255, 0.25 );
+  border-radius: 3px;
+  margin: 20px 45px;
+}
+
+.overview {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.overview .time,
+.overview .date {
+  display: inline;
+}
+
+.overview .time .value {
+  font-size: 80px;
+  margin-right: 5px;
+}
+
+.overview .time .period {
+  font-size: 20px;
+}
+
+
+.overview .date {
+  font-size: 16px;
+}
+
+.overview .date .written {
+  margin-right: 10px;
+}
+
+.overview .weather {
+  width: 120px;
+  padding: 10px;
+  background-color: #333;
+}
+
+.overview .weather .temperature,
+.overview .weather .condition {
+  text-align: center;
+}
+
+.overview .weather .temperature .value {
+  font-size: 70px;
+}
+
+.overview .weather .temperature .degree {
+  font-size: 40px;
+}
+
+.overview .weather .condition {
+  font-size: 16px;
+}

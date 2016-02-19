@@ -1,5 +1,11 @@
 const settings = {
   'weather': {
+    'apiKey': '5c084e3b39a49a5974701c58069592c6',
+    'location': 'Toronto,CA',
+    'units': 'metric',
+    'forecastPeriod': 27,
+    'pollingInterval': 5,
+    'precipitationMax': 10,
     'width': 405,
     'height': 150,
     'margins': {
@@ -7,15 +13,9 @@ const settings = {
       'right': 15,
       'bottom': 15,
       'left': 35
-    },
-    'forecastPeriod': 27,
-    'pollingInterval': 15,
-    'precipitationMax': 5,
-    'apiKey': '5c084e3b39a49a5974701c58069592c6',
-    'location': 'Toronto,CA',
-    'units': 'metric'
+    }
   },
-  'ttc': {
+  'ttcRoutes': {
     'pollingInterval': 1,
     'routes': [ {
       'id': 26,

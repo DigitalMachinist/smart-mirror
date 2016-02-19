@@ -1,5 +1,5 @@
 
-export default function getTTCDepartureData ( routes ) {
+export function getTTCDepartureData ( routes ) {
 
   // For each route, flat map the stops together into one long array and run an API request
   // for each of them. Promise.all() guarantees that the .then() function below will receive
