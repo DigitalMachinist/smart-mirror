@@ -1,9 +1,9 @@
-require( './TTC.css' );
+require( './TTCSchedule.css' );
 
 import { default as React, Component, PropTypes } from 'react';
 import TTCRoute from './TTCRoute';
 
-export default class TTC extends Component {
+export default class TTCSchedule extends Component {
 
   constructor ( props ) {
     super( props );
@@ -42,10 +42,10 @@ export default class TTC extends Component {
 
 }
 
-TTC.defaultProps = {
+TTCSchedule.defaultProps = {
   data: []
 };
 
-TTC.propTypes = {
+TTCSchedule.propTypes = {
   data: PropTypes.array.isRequired
 };

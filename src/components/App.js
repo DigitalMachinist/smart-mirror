@@ -1,20 +1,23 @@
 require( 'normalize.css' );
+require( '../fontello/css/meteocons.css' );
 require( '../index.css' );
 
 import { default as React, Component } from 'react';
 import Settings from '../settings';
 import { getCurrentAnd3HForecast } from '../utils/OpenWeatherMap';
 import { getTTCDepartureData } from '../utils/NextBus';
-import Overview from './Overview/Overview';
-import TTC from './TTC/TTC';
+import Clock from './Clock/Clock';
+import TTCSchedule from './TTCSchedule/TTCSchedule';
+import Weather from './Weather/Weather';
 import WeatherForecast from './WeatherForecast/WeatherForecast';
 
 export default class AppComponent extends Component {
 
   constructor( props ) {
     super( props );
-    this.__renderOverview = this.__renderOverview.bind( this );
+    this.__renderClock = this.__renderClock.bind( this );
     this.__renderTTCSchedule = this.__renderTTCSchedule.bind( this );
+    this.__renderWeather = this.__renderWeather.bind( this );
     this.__renderWeatherForecast = this.__renderWeatherForecast.bind( this );
     this.__startPollingDate = this.__startPollingDate.bind( this );
     this.__startPollingTTCRoutes = this.__startPollingTTCRoutes.bind( this );
@@ -40,7 +43,7 @@ export default class AppComponent extends Component {
       <div className="index">
         { this.__renderWeatherForecast() }
         { this.__renderTTCSchedule() }
-        { this.__renderOverview() }
+        { this.__renderClock() }
       </div>
     );
   }
@@ -59,26 +62,29 @@ export default class AppComponent extends Component {
     this.__stopPollingWeather();
   }
 
-  __renderOverview () {
-    const { date, weather } = this.state;
-    if ( weather && weather.length > 0 ) {
-      const { condition, temperature } = weather[ 0 ];
-      return (
-        <Overview
-          condition = { condition }
-          date = { date }
-          temperature = { temperature }
-        />
-      );
-    }
-    return '';
+  __renderClock () {
+    const { date } = this.state;
+    return (
+      <Clock
+        date = { date }
+      />
+    );
   }
 
   __renderTTCSchedule () {
     const { ttcRoutes } = this.state;
     return (
-      <TTC
+      <TTCSchedule
         data = { ttcRoutes }
+      />
+    );
+  }
+
+  __renderWeather () {
+    const { weather } = this.state;
+    return (
+      <Weather
+        data = { weather.slice( 0, 1 ) }
       />
     );
   }
@@ -152,7 +158,7 @@ export default class AppComponent extends Component {
 
   __updateWeather () {
     const { apiKey, location, forecastPeriod, units } = Settings.weather;
-    getCurrentAnd3HForecast( apiKey, location, forecastPeriod, units )
+    getCurrentAnd3HForecast( apiKey, location, forecastPeriod, units, 500 )
       .then( weather => this.setState( { weather } ) );
   }
 

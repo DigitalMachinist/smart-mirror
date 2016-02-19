@@ -1,0 +1,24 @@
+
+.clock {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 280px;
+  padding: 10px 6px;
+  text-align: right;
+}
+
+.clock .time {
+  font-size: 100px;
+  line-height: 0.75;
+}
+
+.clock .weekday {
+  font-size: 40px;
+  margin: 20px 5px 5px 5px;
+}
+
+.clock .date {
+  font-size: 40px;
+  margin: 5px 5px 0 10px;
+}
