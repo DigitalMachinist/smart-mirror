@@ -40,10 +40,14 @@ export default class AppComponent extends Component {
 
   render () {
     return (
-      <div className="index">
-        { this.__renderWeatherForecast() }
-        { this.__renderTTCSchedule() }
-        { this.__renderClock() }
+      <div className="index clearfix">
+        <div className="left">
+          { this.__renderTTCSchedule() }
+        </div>
+        <div className="right">
+          { this.__renderClock() }
+          { this.__renderWeatherForecast() }
+        </div>
       </div>
     );
   }
@@ -72,10 +76,12 @@ export default class AppComponent extends Component {
   }
 
   __renderTTCSchedule () {
+    const { maxDepartures } = Settings.ttcRoutes;
     const { ttcRoutes } = this.state;
     return (
       <TTCSchedule
         data = { ttcRoutes }
+        maxDepartures = { maxDepartures }
       />
     );
   }

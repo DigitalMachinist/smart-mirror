@@ -1,4 +1,6 @@
 
+const URL = 'http://api.openweathermap.org/data/2.5/';
+
 export function getCurrentAnd3HForecast( apiKey, location, forecastPeriod = 120, units = 'metric', apiDelay = 500 ) {
 
   // Note: This used to use Promise.all() to perform these fetches in parallel, but the Open
@@ -40,7 +42,8 @@ export function get3HourForecastData( apiKey, location, forecastPeriod = 120, un
     throw new Error( 'Units must be either "metric" or "imperial".' );
   }
 
-  return fetch( `http://api.openweathermap.org/data/2.5/forecast?q=${ location }&units=${ units }&appid=${ apiKey }` )
+  const route = 'forecast';
+  return fetch( `${ URL }${ route }?q=${ location }&units=${ units }&appid=${ apiKey }` )
     .then( res => res.json() )
     .catch( error => {
       console.error( 'Failed to get weather data from Open Weather Map API!' );
@@ -74,7 +77,8 @@ export function getCurrentWeatherData( apiKey, location, units = 'metric' ) {
     throw new Error( 'Units must be either "metric" or "imperial".' );
   }
 
-  return fetch( `http://api.openweathermap.org/data/2.5/weather?q=${ location }&units=${ units }&appid=${ apiKey }` )
+  const route = 'weather';
+  return fetch( `${ URL }${ route }?q=${ location }&units=${ units }&appid=${ apiKey }` )
     .then( res => res.json() )
     .catch( error => {
       console.error( 'Failed to get weather data from Open Weather Map API!' );

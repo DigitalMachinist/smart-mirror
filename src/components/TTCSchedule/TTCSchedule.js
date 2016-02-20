@@ -13,28 +13,34 @@ export default class TTCSchedule extends Component {
   render () {
     return (
       <div className="ttc">
+        <hr />
         { this.__renderTTCRoutes() }
       </div>
     );
   }
 
   __renderTTCRoutes () {
-    const { data } = this.props;
+    const { data, maxDepartures } = this.props;
     return (
       data
         .sort( ( a, b ) => b.id - a.id )
         .map( ( route, index ) => {
           const { dangerThreshold, departuresEastbound, departuresWestbound, id, missedThreshold, warningThreshold } = route;
           return (
-            <TTCRoute
+            <div
               key = { index }
-              dangerThreshold = { dangerThreshold }
-              departuresEastbound = { departuresEastbound }
-              departuresWestbound = { departuresWestbound }
-              id = { id }
-              missedThreshold = { missedThreshold }
-              warningThreshold = { warningThreshold }
-            />
+            >
+              <TTCRoute
+                dangerThreshold = { dangerThreshold }
+                departuresEastbound = { departuresEastbound }
+                departuresWestbound = { departuresWestbound }
+                id = { id }
+                maxDepartures = { maxDepartures }
+                missedThreshold = { missedThreshold }
+                warningThreshold = { warningThreshold }
+              />
+              <hr />
+            </div>
           );
         } )
     );
@@ -43,9 +49,11 @@ export default class TTCSchedule extends Component {
 }
 
 TTCSchedule.defaultProps = {
-  data: []
+  data: [],
+  maxDepartures: 3
 };
 
 TTCSchedule.propTypes = {
-  data: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired,
+  maxDepartures: PropTypes.number
 };

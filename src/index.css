@@ -2,25 +2,27 @@
 /* Base Application Styles */
 /*                         */
 
-@import url(https://fonts.googleapis.com/css?family=Josefin+Sans:300,600|Dosis:300,600|Raleway:300,600);
-
 body {
   background-color: #000000;
   color: #ffffff;
   fill: #ffffff;
-  font: 12px sans-serif;
+  font-family: "Work Sans";
+  font-size: 12px;
+  font-weight: 300;
   stroke: none;
   stoke-width: 1px;
-}
-
-.clearfix {
-  clear: both;
 }
 
 .left {
   float: left;
 }
-
 .right {
   float: right;
+}
+.clearfix:after {
+   content: ".";
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
 }

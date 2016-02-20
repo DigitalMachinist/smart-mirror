@@ -16,6 +16,7 @@ const settings = {
     }
   },
   'ttcRoutes': {
+    'maxDepartures': 3,
     'pollingInterval': 1,
     'routes': [ {
       'id': 26,

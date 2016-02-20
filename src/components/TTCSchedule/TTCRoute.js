@@ -9,43 +9,38 @@ export default class TTCRoute extends Component {
   }
 
   render () {
-    const { departuresEastbound, departuresWestbound, id } = this.props;
+    const { departuresEastbound, departuresWestbound, id, maxDepartures } = this.props;
     return (
-      <div className="routeContainer">
-        <div className="route">
-          <div className="number">
-            <span>{ id }</span>
-          </div>
-          <div className="direction eastbound">
-            <div className="title column">E</div>
-            { this.__renderTTCDepartures( departuresEastbound, 4 ) }
-          </div>
-          <div className="direction westbound">
-            <div className="title column">W</div>
-            { this.__renderTTCDepartures( departuresWestbound, 4 ) }
-          </div>
+      <div className="route clearfix">
+        <div className="number">
+          <span>{ id }</span>
+        </div>
+        <div className="direction eastbound left">
+          <div className="title">E</div>
+          { this.__renderTTCDepartures( departuresEastbound, maxDepartures ) }
+        </div>
+        <div className="direction westbound right">
+          <div className="title">W</div>
+          { this.__renderTTCDepartures( departuresWestbound, maxDepartures ) }
         </div>
       </div>
     );
   }
 
-  __renderTTCDepartures ( departures, max = 4 ) {
-    const { dangerThreshold, id, missedThreshold, warningThreshold } = this.props;
+  __renderTTCDepartures ( departures, max ) {
+    const { dangerThreshold, id, maxDepartures, missedThreshold, warningThreshold } = this.props;
     return (
       departures
         .reduce( ( take, departure, i ) => {
-          return ( i >= max )
-            ? take
-            : take.concat( departure );
+          return ( i < max )
+            ? take.concat( departure )
+            : take;
         }, [] )
         .map( ( totalMinutes, index ) => {
-          // const hours = Math.floor( totalMinutes / 60 );
-          // const minutes = ( totalMinutes % 60 ).toFixed( 0 );
           return (
             <TTCDeparture
               key = { index }
               dangerThreshold = { dangerThreshold }
-              index = { index + 1 }
               minutes = { totalMinutes }
               missedThreshold = { missedThreshold }
               text = { `${ totalMinutes }m` }
@@ -63,6 +58,7 @@ TTCRoute.defaultProps = {
   departuresEastbound: [],
   departuresWestbound: [],
   id: 0,
+  maxDepartures: 3,
   missedThreshold: 2,
   warningThreshold: 10
 };
@@ -72,6 +68,7 @@ TTCRoute.propTypes = {
   departuresEastbound: PropTypes.array.isRequired, // Array of minutes
   departuresWestbound: PropTypes.array.isRequired, // Array of minutes
   id: PropTypes.number.isRequired, // Stop number
+  maxDepartures: PropTypes.number, // Max # of departures to display
   missedThreshold: PropTypes.number, // Minutes
   warningThreshold: PropTypes.number // Minutes
 };
