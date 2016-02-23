@@ -30,24 +30,32 @@ export default class TTCRoute extends Component {
   __renderTTCDepartures ( departures, max ) {
     const { dangerThreshold, id, maxDepartures, missedThreshold, warningThreshold } = this.props;
     return (
-      departures
-        .reduce( ( take, departure, i ) => {
-          return ( i < max )
-            ? take.concat( departure )
-            : take;
-        }, [] )
-        .map( ( totalMinutes, index ) => {
-          return (
-            <TTCDeparture
-              key = { index }
-              dangerThreshold = { dangerThreshold }
-              minutes = { totalMinutes }
-              missedThreshold = { missedThreshold }
-              text = { `${ totalMinutes }m` }
-              warningThreshold = { warningThreshold }
-            />
-          );
-        } )
+      ( departures.length <= 0 )
+        ? <TTCDeparture
+            dangerThreshold = { dangerThreshold }
+            minutes = { 0 }
+            missedThreshold = { missedThreshold }
+            text = { 'n/a' }
+            warningThreshold = { warningThreshold }
+          />
+        : departures
+            .reduce( ( take, departure, i ) => {
+              return ( i < max )
+                ? take.concat( departure )
+                : take;
+            }, [] )
+            .map( ( totalMinutes, index ) => {
+              return (
+                <TTCDeparture
+                  key = { index }
+                  dangerThreshold = { dangerThreshold }
+                  minutes = { totalMinutes }
+                  missedThreshold = { missedThreshold }
+                  text = { `${ totalMinutes }m` }
+                  warningThreshold = { warningThreshold }
+                />
+              );
+            } )
     );
   }
 

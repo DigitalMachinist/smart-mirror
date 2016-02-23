@@ -13,7 +13,6 @@ export default class TTCSchedule extends Component {
   render () {
     return (
       <div className="ttc">
-        <hr />
         { this.__renderTTCRoutes() }
       </div>
     );
@@ -24,12 +23,13 @@ export default class TTCSchedule extends Component {
     return (
       data
         .sort( ( a, b ) => b.id - a.id )
-        .map( ( route, index ) => {
+        .map( ( route, i ) => {
           const { dangerThreshold, departuresEastbound, departuresWestbound, id, missedThreshold, warningThreshold } = route;
           return (
             <div
-              key = { index }
+              key = { i }
             >
+              { ( i > 0 ) ? <hr /> : '' }
               <TTCRoute
                 dangerThreshold = { dangerThreshold }
                 departuresEastbound = { departuresEastbound }
@@ -39,7 +39,6 @@ export default class TTCSchedule extends Component {
                 missedThreshold = { missedThreshold }
                 warningThreshold = { warningThreshold }
               />
-              <hr />
             </div>
           );
         } )

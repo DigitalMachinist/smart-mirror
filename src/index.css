@@ -26,3 +26,7 @@ body {
    height: 0;
    clear: both;
 }
+
+.main-column {
+  width: 400px;
+}

@@ -1,99 +1,82 @@
 
-const URL = 'http://api.openweathermap.org/data/2.5/';
-
-export function getCurrentAnd3HForecast( apiKey, location, forecastPeriod = 120, units = 'metric', apiDelay = 500 ) {
-
-  // Note: This used to use Promise.all() to perform these fetches in parallel, but the Open
-  // Weather Map API is pissy and intermittantly rejects requests because they are too frequent.
-  // I have opted for this sequential fetching process to hopefully avoid HTTP status 429s being
-  // returned for violating the API rate limit.
-  return getCurrentWeatherData( apiKey, location, units )
-    .then( currentSample => {
-      // Delay for another while to prevent rate limiting issues, then resolve with the current
-      // sample so the next .then() can include it in the result set.
-      return new Promise( ( resolve, reject ) => {
-        setTimeout( () => resolve( currentSample ), apiDelay );
-      } );
-    } )
-    .then( currentSample => {
-      // Once the 3h forecast samples come back, flatten the current sample and the 3h forecast
-      // samples into a single array and return that.
-      return get3HourForecastData( apiKey, location, forecastPeriod, units )
-        .then( forecastSamples => [ currentSample ].concat( forecastSamples ) );
-    } );
-
-}
-
-export function get3HourForecastData( apiKey, location, forecastPeriod = 120, units = 'metric' ) {
-
-  if ( !apiKey ) {
-    throw new Error( 'An API key is required to access the weather API.' );
-  }
-
-  if ( !location ) {
-    throw new Error( 'A location must be given to query weather conditions e.g. "Toronto,CA".' );
-  }
-
+export function get3HourForecastData( apiKey, location, units = 'metric', forecastPeriod = 120 ) {
+  validateInputs( apiKey, location, units );
   if ( forecastPeriod <= 0 ) {
     throw new Error( 'The provided forecastPeriod (time window) must be a positive integer value.' );
   }
-
-  if ( units !== 'metric' && units != 'imperial' ) {
-    throw new Error( 'Units must be either "metric" or "imperial".' );
-  }
-
-  const route = 'forecast';
-  return fetch( `${ URL }${ route }?q=${ location }&units=${ units }&appid=${ apiKey }` )
-    .then( res => res.json() )
-    .catch( error => {
-      console.error( 'Failed to get weather data from Open Weather Map API!' );
-      throw error;
-    } )
-    .then( rawData => {
+  return fetchData (
+    'forecast',
+    {
+      q: location,
+      units,
+      appid: apiKey
+    },
+    data => {
       const endDate = new Date( new Date().getTime() + forecastPeriod * 60 * 60 * 1000 );
-      return rawData
+      return data
         .list
-        .filter( sample => getDate( sample ) <= endDate )
-        .map( transformWeatherSample );
-    } )
-    .catch( error => {
-      console.error( 'Failed to transform the data from the Open Weather Map API!' );
-      throw error;
-    } );
-
+        .filter( sample => getDate( sample.dt ) <= endDate )
+        .map( transform3HWeatherSample );
+    }
+  );
 }
 
 export function getCurrentWeatherData( apiKey, location, units = 'metric' ) {
+  validateInputs( apiKey, location, units );
+  return fetchData (
+    'weather',
+    {
+      q: location,
+      units,
+      appid: apiKey
+    },
+    data => transform3HWeatherSample( data )
+  );
+}
 
-  if ( !apiKey ) {
-    throw new Error( 'An API key is required to access the weather API.' );
+export function getTodaysWeatherData ( apiKey, location, units = 'metric' ) {
+  validateInputs( apiKey, location, units );
+  return fetchData (
+    'forecast/daily',
+    {
+      q: location,
+      units,
+      appid: apiKey
+    },
+    data => {
+      return data
+        .list
+        .reduce( ( acc, sample ) => transformTodaysWeatherSample( sample ) );
+    }
+  );
+}
+
+function fetchData ( resource, args, dataTransformFunc ) {
+  const baseUrl = 'http://api.openweathermap.org/data/2.5/';
+  let url = `${ baseUrl }${ resource }?`;
+  for ( let argKey of Object.keys( args ) ) {
+    url += `${ argKey }=${ args[ argKey ] }&`;
   }
+  url = url.slice( 0, url.length - 1 );
+  return fetchDataFromUrl( url, dataTransformFunc );
+}
 
-  if ( !location ) {
-    throw new Error( 'A location must be given to query weather conditions e.g. "Toronto,CA".' );
-  }
-
-  if ( units !== 'metric' && units != 'imperial' ) {
-    throw new Error( 'Units must be either "metric" or "imperial".' );
-  }
-
-  const route = 'weather';
-  return fetch( `${ URL }${ route }?q=${ location }&units=${ units }&appid=${ apiKey }` )
+function fetchDataFromUrl ( url, dataTransformFunc ) {
+  return fetch( url )
     .then( res => res.json() )
     .catch( error => {
       console.error( 'Failed to get weather data from Open Weather Map API!' );
       throw error;
     } )
-    .then( rawData => transformWeatherSample( rawData ) )
+    .then( dataTransformFunc )
     .catch( error => {
       console.error( 'Failed to transform the data from the Open Weather Map API!' );
       throw error;
     } );
-
 }
 
-function getDate ( sample ) {
-  return new Date( sample.dt * 1000 );
+function getDate ( value ) {
+  return new Date( 1000 * value );
 }
 
 function getPrecipitation ( sample, key ) {
@@ -106,32 +89,51 @@ function getPrecipitation ( sample, key ) {
   return sample[ key ][ '3h' ];
 }
 
-function getWeatherCondition ( sample ) {
-  return sample.weather[ 0 ].main;
-}
-
-function getWeatherIcon ( sample ) {
-  return sample.weather[ 0 ].icon;
-}
-
 function isExtremeWeather ( sample ) {
   var extremes =
     sample
       .weather
-        .filter( weather => weather.main.toLowerCase().includes( 'extreme' ) );
+      .filter( weather => weather.main.toLowerCase().includes( 'extreme' ) );
   return ( extremes.length > 0 );
 }
 
-function transformWeatherSample ( sample ) {
+function transform3HWeatherSample ( sample ) {
   return {
-    date: getDate( sample ),
-    condition: getWeatherCondition( sample ),
+    date: getDate( sample.dt ),
+    condition: sample.weather[ 0 ].main,
+    conditionCode: sample.weather[ 0 ].id,
+    iconCode: sample.weather[ 0 ].icon,
     isExtreme: isExtremeWeather( sample ),
-    icon: getWeatherIcon( sample ),
     temperature: sample.main.temp, // C
     humidity: sample.main.humidity, // %
     pressure: sample.main.pressure / 10, // kPa
     precipitation: getPrecipitation( sample, 'rain' ) + getPrecipitation( sample, 'snow' ), // cm
+    sunrise: getDate( sample.sys.sunrise ),
+    sunset: getDate( sample.sys.sunset ),
     windspeed: sample.wind.speed * 3.6 // km/h
   };
+}
+
+function transformTodaysWeatherSample ( sample ) {
+  return {
+    date: getDate( sample.dt ),
+    condition: sample.weather[ 0 ].description,
+    conditionCode: sample.weather[ 0 ].id,
+    iconCode: sample.weather[ 0 ].icon,
+    isExtreme: isExtremeWeather( sample ),
+    temperatureMax: sample.temp.max,
+    temperatureMin: sample.temp.min
+  };
+}
+
+function validateInputs ( apiKey, location, units ) {
+  if ( !apiKey ) {
+    throw new Error( 'An API key is required to access the weather API.' );
+  }
+  if ( !location ) {
+    throw new Error( 'A location must be given to query weather conditions e.g. "Toronto,CA".' );
+  }
+  if ( units !== 'metric' && units != 'imperial' ) {
+    throw new Error( 'Units must be either "metric" or "imperial".' );
+  }
 }

@@ -158,7 +158,7 @@ export function drawChart ( element, data, height, width, margins, precipitation
     .data( data.slice( 1 ) )
     .enter()
     .append( 'text' )
-    .text( d => `${ d.temperature.toFixed( 0 ) }°` )
+    .text( d => `${ Math.round( d.temperature ).toFixed( 0 ) }°` )
     .attr( 'class', 'label' )
     .attr( 'transform', d => {
       return `translate(${ xScale( d.date ) - 7 },${ yScaleTemperature( d.temperature ) - 7 })`;

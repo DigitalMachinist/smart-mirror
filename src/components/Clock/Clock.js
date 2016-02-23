@@ -22,7 +22,7 @@ export default class Clock extends Component {
           { now.format( 'dddd' ) }
         </div>
         <div className="date">
-          { now.format( 'MMMM d' ) }
+          { now.format( 'MMMM Do' ) }
         </div>
       </div>
     );
