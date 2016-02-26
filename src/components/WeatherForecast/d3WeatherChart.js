@@ -1,4 +1,5 @@
 import d3 from 'd3';
+import Moment from 'moment';
 
 export function drawChart ( element, data, height, width, margins, precipitationMax = 10 ) {
 
@@ -29,8 +30,8 @@ export function drawChart ( element, data, height, width, margins, precipitation
       .scale
       .linear()
       .domain( [
-        d3.min( data, d => d.temperature ) - 3,
-        d3.max( data, d => d.temperature ) + 3
+        d3.min( data, d => d.temperature ) - 5,
+        d3.max( data, d => d.temperature ) + 5
       ] )
       .nice()
       .range( [ innerHeight, 0 ] );
@@ -42,7 +43,7 @@ export function drawChart ( element, data, height, width, margins, precipitation
       .axis()
       .scale( xScale )
       .orient( 'bottom' )
-      .ticks( 5 )
+      .ticks( 10 )
       .tickFormat( d3.time.format( '%-I%p' ) )
       .innerTickSize( -innerHeight )
       .outerTickSize( 0 )
@@ -112,7 +113,7 @@ export function drawChart ( element, data, height, width, margins, precipitation
   svg
     .append( 'g' )
     .attr( 'class', 'x axis time' )
-    .attr( 'transform', `translate(0,${ innerHeight })` )
+    .attr( 'transform', `translate(0,${ innerHeight - 20 })` )
     .call( xAxis );
 
   // svg
@@ -152,10 +153,18 @@ export function drawChart ( element, data, height, width, margins, precipitation
     .attr( 'class', 'line temperature' )
     .attr( 'd', temperatureLine );
 
+  // Temperature labels shouldn't include the first or last data point, and they shouldn't
+  // include data points less than 1 hour from now.
+  const startLimit = Moment().add( 1, 'hours' );
+  const labelData =
+    data
+      .slice( 1, data.length - 1 )
+      .filter( d => Moment( d.date ) >= startLimit );
+
   // Draw tempaerature labels.
   svg
     .selectAll( '.label' )
-    .data( data.slice( 1 ) )
+    .data( labelData )
     .enter()
     .append( 'text' )
     .text( d => `${ Math.round( d.temperature ).toFixed( 0 ) }°` )

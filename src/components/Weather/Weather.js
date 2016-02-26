@@ -7,6 +7,7 @@ export default class Weather extends Component {
   constructor ( props ) {
     super( props );
     this.__getIconData = this.__getIconData.bind( this );
+    this.__renderTemperature = this.__renderTemperature.bind( this );
   }
 
   render () {
@@ -19,18 +20,28 @@ export default class Weather extends Component {
     return (
       <div className="weather">
         <div className="display">
-          <div className="clearfix">
-            <div className="temp main left">{ Math.round( temperature ).toFixed( 0 ) }°</div>
-            <div className="left">
-              <div className="temp high">{ Math.round( tempHigh ).toFixed( 0 ) }</div>
-              <div className="temp low">{ Math.round( tempLow ).toFixed( 0 ) }</div>
-            </div>
-            <div className={ `icon wi wi-${ iconData.icon } left` }></div>
-          </div>
+          <div className={ `icon wi wi-${ iconData.icon }` }></div>
           <div className={ `description${ extremeClass }` }>{ iconData.description }</div>
+          <div className="temperature">{ this.__renderTemperature( temperature ) }</div>
+          <div className="clearfix">
+            <div className="temp low left">
+              <div className="title">Low</div>
+              <div className="value">{ this.__renderTemperature( tempLow ) }</div>
+            </div>
+            <div className="temp high right">
+              <div className="title">High</div>
+              <div className="value">{ this.__renderTemperature( tempHigh ) }</div>
+            </div>
+          </div>
         </div>
       </div>
     );
+  }
+
+  __renderTemperature ( value ) {
+    return !!value
+      ? `${ Math.round( value ).toFixed( 0 ) }°`
+      : '';
   }
 
   __getIconData () {

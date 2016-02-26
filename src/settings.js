@@ -7,17 +7,17 @@ const settings = {
     'forecastPeriod': 27,
     'pollingInterval': 5,
     'precipitationMax': 10,
-    'width': 300,
-    'height': 100,
+    'width': 1280,
+    'height': 80,
     'margins': {
-      'top': 10,
-      'right': 15,
-      'bottom': 15,
-      'left': 35
+      'top': 0,
+      'right': 0,
+      'bottom': 0,
+      'left': 0
     }
   },
   'ttcRoutes': {
-    'maxDepartures': 3,
+    'maxDepartures': 2,
     'pollingInterval': 1,
     'routes': [ {
       'id': 26,
@@ -193,7 +193,7 @@ const settings = {
     '531-night': { icon: 'night-alt-storm-showers', description: 'Sample description' },
     '600-night': { icon: 'night-alt-snow', description: 'Sample description' },
     '601-night': { icon: 'night-alt-sleet', description: 'Sample description' },
-    '602-night': { icon: 'night-alt-snow', description: 'Sample description' },
+    '602-night': { icon: 'night-alt-snow', description: 'Sleet' },
     '611-night': { icon: 'night-alt-rain-mix', description: 'Sample description' },
     '612-night': { icon: 'night-alt-rain-mix', description: 'Sample description' },
     '615-night': { icon: 'night-alt-rain-mix', description: 'Sample description' },

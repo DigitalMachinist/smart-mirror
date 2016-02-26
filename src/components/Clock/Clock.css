@@ -1,23 +1,26 @@
 
 .clock {
-  margin: 20px;
   text-align: right;
+}
+
+.clock .display {
+  margin: 0 10px;
 }
 
 .clock .time {
   font-size: 120px;
   font-weight: 100;
-  line-height: 0.75;
+  line-height: 0.67;
 }
 
 .clock .weekday {
   font-size: 40px;
   font-weight: 200;
-  margin: 20px 5px 5px 5px;
+  margin-top: 25px;
 }
 
 .clock .date {
   font-size: 40px;
   font-weight: 200;
-  margin: 5px 5px 0 10px;
+  margin-top: 5px;
 }

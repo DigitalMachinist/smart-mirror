@@ -1,50 +1,56 @@
 
 .weather {
-  margin: 20px;
-}
-
-.weather hr {
-  height: 0;
-  border-bottom: 0 solid rgba( 235, 235, 235, 0.65 );
-  margin: 20px 0 25px 0;
+  width: 120px;
 }
 
 .weather .display {
   margin: 0 10px;
-}
-
-.weather .temp.main {
-  font-size: 120px;
-  font-weight: 100;
-  line-height: 0.75;
-}
-
-.weather .temp.low,
-.weather .temp.high {
-  color: rgba( 255, 255, 255, 0.7 );
-  font-size: 30px;
-  font-weight: 200;
-  line-height: 0.95;
-  margin: 0 20px 0 10px;
-  text-align: right;
-}
-
-.weather .temp.high {
-  margin-bottom: 35px;
+  text-align: center;
 }
 
 .weather .icon {
-  font-size: 70px;
-  margin-top: 5px;
+  font-size: 85px;
+  margin-bottom: 15px;
 }
 
 .weather .description {
   font-size: 20px;
   font-weight: 200;
-  margin-top: 10px;
-  text-align: right;
+  margin: 10px 0;
 }
 
-.weather .description.extreme {
-  colour: rgba( 235, 60, 60, 1.0 );
+.weather .temperature {
+  width: 100%;
+  font-size: 54px;
+  font-weight: 200;
+  line-height: 0.9;
+}
+
+.weather .temp {
+  width: 40px;
+  margin: 10px 0;
+}
+
+.weather .temp.low {
+  text-align: center;
+}
+
+.weather .temp.high {
+  text-align: center;
+}
+
+.weather .temp .title {
+  font-size: 16px;
+  font-weight: 200;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+}
+
+.weather .temp .value {
+  font-size: 22px;
+  font-weight: 100;
+}
+
+.weather .extreme {
+  color: rgba( 235, 60, 60, 1.0 ) !important;
 }

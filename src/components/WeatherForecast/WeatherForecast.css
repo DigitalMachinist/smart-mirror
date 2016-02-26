@@ -1,28 +1,32 @@
 
-.weatherForecast {
-  margin: 10px;
+.weatherForecast svg {
+  border: 1px solid rgba( 255, 255, 255, 0.4 );
 }
 
 .weatherForecast .area.precipitation {
-  fill: rgba( 255, 255, 255, 0.5 );
+  fill: rgba( 255, 255, 255, 0.4 );
 }
 
 .weatherForecast .area.temperature {
-  fill: rgba( 255, 255, 255, 0.25 );
+  fill: rgba( 255, 255, 255, 0.10 );
 }
 
 .weatherForecast .line.temperature {
   fill: none;
   stroke: rgba( 255, 255, 255, 1.0 );
-  stroke-width: 1.5;
-}
-
-.weatherForecast .x.axis line {
-  fill: none;
-  stroke: rgba( 255, 255, 255, 0.5 );
-  stroke-width: 0.5;
+  stroke-width: 1;
 }
 
 .weatherForecast .label {
+  fill: rgba( 255, 255, 255, 1.0 );
+}
+
+.weatherForecast .x.axis .tick text {
+  fill: rgba( 255, 255, 255, 0.8 );
+}
+
+.weatherForecast .x.axis .tick line {
+  fill: none;
+  stroke: rgba( 255, 255, 255, 0.4 );
   stroke-width: 0.5;
 }

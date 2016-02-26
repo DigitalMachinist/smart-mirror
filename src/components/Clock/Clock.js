@@ -15,14 +15,16 @@ export default class Clock extends Component {
     const now = Moment( date );
     return (
       <div className="clock">
-        <div className="time">
-          { now.format( 'h:mm' ) }
-        </div>
-        <div className="weekday">
-          { now.format( 'dddd' ) }
-        </div>
-        <div className="date">
-          { now.format( 'MMMM Do' ) }
+        <div className="display">
+          <div className="time">
+            { now.format( 'h:mm' ) }
+          </div>
+          <div className="weekday">
+            { now.format( 'dddd' ) }
+          </div>
+          <div className="date">
+            { now.format( 'MMMM Do' ) }
+          </div>
         </div>
       </div>
     );

@@ -42,21 +42,38 @@ export default class AppComponent extends Component {
     };
   }
 
+  // <div className="column left clearfix">
+  //   <div className="container left">
+  //     { this.__renderTTCSchedule() }
+  //   </div>
+  // </div>
+  // <div className="column right clearfix">
+  //   <div className="container right">
+  //     { this.__renderClock() }
+  //     <hr />
+  //   </div>
+  //   <div className="container right">
+  //     { this.__renderTodaysWeather() }
+  //   </div>
+  // </div>
   render () {
+
     return (
-      <div className="index clearfix">
-        <div className="main-column left clearfix">
-          <div className="left">
-            { this.__renderTTCSchedule() }
-          </div>
+      <div className="app">
+        <div className="weatherForecastContainer">
+          { this.__renderWeatherForecast() }
         </div>
-        <div className="main-column right clearfix">
-          <div className="right">
-            { this.__renderClock() }
-          </div>
-          <div className="right">
-            { this.__renderTodaysWeather() }
-          </div>
+        <div className="ttcScheduleContainer">
+          { this.__renderTTCSchedule() }
+          <hr />
+        </div>
+        <div className="clockContainer">
+          { this.__renderClock() }
+          <hr />
+        </div>
+        <div className="weatherContainer">
+          { this.__renderTodaysWeather() }
+          <hr />
         </div>
       </div>
     );

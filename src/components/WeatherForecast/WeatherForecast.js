@@ -38,10 +38,10 @@ WeatherForecast.defaultProps = {
   data: [],
   height: 200,
   margins: {
-    top: 15,
-    right: 15,
-    bottom: 15,
-    left: 15
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0
   },
   precipitationMax: 10,
   width: 800
