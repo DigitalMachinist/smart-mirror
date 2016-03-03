@@ -6,22 +6,22 @@ export default class Weather extends Component {
 
   constructor ( props ) {
     super( props );
-    this.__getIconData = this.__getIconData.bind( this );
+    this.__getIconSettings = this.__getIconSettings.bind( this );
     this.__renderTemperature = this.__renderTemperature.bind( this );
   }
 
   render () {
-    const { data } = this.props;
-    const { conditionCode, isExtreme, temperature, temperatureMax, temperatureMin } = data;
+    const { data, iconMap } = this.props;
+    const { conditionCode, isExtreme, temperature, sunrise, sunset, temperatureMax, temperatureMin } = data;
     const extremeClass = isExtreme ? ' extreme' : '';
-    const iconData = this.__getIconData();
+    const iconSettings = this.__getIconSettings( iconMap, conditionCode, sunrise, sunset );
     const tempHigh = Math.max( temperature, temperatureMax );
     const tempLow = Math.min( temperature, temperatureMin );
     return (
       <div className="weather">
         <div className="display">
-          <div className={ `icon wi wi-${ iconData.icon }` }></div>
-          <div className={ `description${ extremeClass }` }>{ iconData.description }</div>
+          <div className={ `icon wi wi-${ iconSettings.icon }` }></div>
+          <div className={ `description${ extremeClass }` }>{ iconSettings.description }</div>
           <div className="temperature">{ this.__renderTemperature( temperature ) }</div>
           <div className="clearfix">
             <div className="temp low left">
@@ -44,26 +44,15 @@ export default class Weather extends Component {
       : '';
   }
 
-  __getIconData () {
-    const { data, iconMap } = this.props;
-    const { conditionCode, sunset, sunrise } = data;
-
+  __getIconSettings ( iconMap, conditionCode, sunriseDate, sunsetDate ) {
     if ( !iconMap || !conditionCode ) {
       return '';
     }
-
-    let iconKey = conditionCode.toFixed( 0 );
-    const isDayNightCondition =
-      !( conditionCode > 699 && conditionCode < 800 ) &&
-      !( conditionCode > 899 && conditionCode < 1000 );
-    if ( isDayNightCondition ) {
-      const now = new Date();
-      iconKey +=
-        ( now > sunrise && now < sunset )
-          ? '-day'
-          : '-night';
-    }
-
+    const now = new Date();
+    const iconKey =
+      conditionCode
+        .toFixed( 0 )
+        .concat( ( now > sunriseDate && now < sunsetDate ) ? '-day' : '-night' );
     return iconMap[ iconKey ];
   }
 

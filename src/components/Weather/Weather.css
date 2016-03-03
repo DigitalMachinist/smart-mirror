@@ -28,7 +28,7 @@
 
 .weather .temp {
   width: 40px;
-  margin: 10px 0;
+  margin: 10px 0 0 0;
 }
 
 .weather .temp.low {

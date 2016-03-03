@@ -4,8 +4,8 @@ require( 'weather-icons/css/weather-icons.css' );
 
 import { default as React, Component } from 'react';
 import Settings from '../settings';
-import { get3HourForecastData, getCurrentWeatherData, getTodaysWeatherData } from '../utils/OpenWeatherMap';
 import { getTTCDepartureData } from '../utils/NextBus';
+import { get3HourForecastData, getCurrentWeatherData, getTodaysWeatherData } from '../utils/OpenWeatherMap';
 import Clock from './Clock/Clock';
 import TTCSchedule from './TTCSchedule/TTCSchedule';
 import Weather from './Weather/Weather';
@@ -42,20 +42,6 @@ export default class AppComponent extends Component {
     };
   }
 
-  // <div className="column left clearfix">
-  //   <div className="container left">
-  //     { this.__renderTTCSchedule() }
-  //   </div>
-  // </div>
-  // <div className="column right clearfix">
-  //   <div className="container right">
-  //     { this.__renderClock() }
-  //     <hr />
-  //   </div>
-  //   <div className="container right">
-  //     { this.__renderTodaysWeather() }
-  //   </div>
-  // </div>
   render () {
 
     return (

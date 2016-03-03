@@ -49,8 +49,12 @@ function getDefaultModules() {
         loader: 'url-loader?limit=8192'
       },
       {
-        test   : /\.(ttf|eot|svg|woff|woff2)(\?[a-z0-9]+)?$/,
-        loader : 'file-loader'
+        test: /\.(ttf|eot|svg|woff|woff2)(\?[a-z0-9]+)?$/,
+        loader: 'file-loader'
+      },
+      {
+        test: /\.json/,
+        loader: 'json-loader'
       }
     ]
   };
